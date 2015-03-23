@@ -1,3 +1,3 @@
 # doncredasPHP
-My personal home page coded with Symfony2 Framework
+## My personal home page
 The website is online at http://doncredas.olympe.in
