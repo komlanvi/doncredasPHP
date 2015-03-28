@@ -1,9 +1,7 @@
 <?php
 
-$app->get('/', function () {
-    require __DIR__ .'/../src/model.php';
-
-    $articles = getArticles();
+$app->get('/', function () use ($app) {
+    $articles = $app['Dao.article']->findAll();
 
     ob_start();
     require __DIR__ .'/../views/view.php';

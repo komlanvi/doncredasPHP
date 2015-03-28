@@ -6,7 +6,7 @@
  * Time: 1.28
  */
 
-namespace doncredasPHP\blog\domain;
+namespace Blog\Domain;
 
 
 class Article {
