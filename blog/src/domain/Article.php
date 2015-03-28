@@ -1,6 +1,12 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: doncredas
+ * Date: 28/03/15
+ * Time: 1.28
+ */
 
-namespace doncredasPHP\blog\src\domain;
+namespace doncredasPHP\blog\domain;
 
 
 class Article {
