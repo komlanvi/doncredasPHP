@@ -44,12 +44,12 @@
     </div>
 </div>
 <div class="container">
+    {% for article in articles %}
     <article>
-        <?php foreach($articles as $article): ?>
-            <h2> <?= $article->getTitre(); ?> </h2>
-            <p> <?= $article->getContenu(); ?> </p>
-        <?php endforeach; ?>
+        <h2> {{ article.titre }} </h2>
+        <p> {{ article.contenu }}</p>
     </article>
+    {% endfor %}
     <hr>
     <footer>
         © doncredas 2015 <span class="pull-right"><a href="https://github.com/doncredas/doncredasPHP" target="_blank">Code source</a></span>
