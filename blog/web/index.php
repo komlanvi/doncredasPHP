@@ -1,7 +1,9 @@
 <?php
 
-require 'model.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-$articles = getArticles();
+$app = new Silex\Application();
 
-require 'view.php';
+require __DIR__ .'/../app/routes.php';
+
+$app->run();
