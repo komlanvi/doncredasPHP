@@ -46,7 +46,7 @@
 <div class="container">
     <article>
         <?php foreach($articles as $article): ?>
-            <h2> <?= $article->getTitle(); ?> </h2>
+            <h2> <?= $article->getTitre(); ?> </h2>
             <p> <?= $article->getContenu(); ?> </p>
         <?php endforeach; ?>
     </article>
