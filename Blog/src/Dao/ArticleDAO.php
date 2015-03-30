@@ -9,25 +9,9 @@
 namespace Blog\Dao;
 
 use Blog\Domain\Article;
-use Doctrine\DBAL\Connection;
 
 
-class ArticleDAO {
-
-    /**
-     * Database connection
-     * @var \Doctrine\DBAL\Connection
-     */
-    private $db;
-
-    /**
-     * Constructor
-     *
-     * @param \Doctrine\DBAL\Connection The database connection object
-     */
-    public function __construct(Connection $db) {
-        $this->db = $db;
-    }
+class ArticleDAO extends DAO{
 
     /**
      * Return a list of all articles, sorted by date (most recent first).
@@ -36,15 +20,30 @@ class ArticleDAO {
      */
     public function findAll() {
         $sql = "SELECT * FROM article ORDER BY id DESC";
-        $result = $this->db->fetchAll($sql);
+        $result = $this->getDB()->fetchAll($sql);
 
         // Convert query result to an array of Domain objects
         $articles = array();
         foreach ($result as $row) {
             $articleId = $row['id'];
-            $articles[$articleId] = $this->buildArticle($row);
+            $articles[$articleId] = $this->buildDomainObject($row);
         }
         return $articles;
+    }
+
+    /**
+     * @param integer $articleId
+     * @return ArticleDAO
+     */
+    public function findArticle($articleId) {
+        $sql = "SELECT * FROM article WHERE id = ?";
+        $row = $this->getDB()->fetchAssoc($sql, array($articleId));
+
+        if ($row) {
+            return $this->buildDomainObject($row);
+        } else {
+            return \Exception("No article matching id: " .$articleId);
+        }
     }
 
     /**
@@ -53,7 +52,7 @@ class ArticleDAO {
      * @param array $row The DB row containing Article data.
      * @return \Blog\Domain\Article
      */
-    private function buildArticle(array $row) {
+    protected function buildDomainObject(array $row) {
         $article = new Article();
         $article->setId($row['id']);
         $article->setTitre($row['titre']);

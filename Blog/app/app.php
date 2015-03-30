@@ -23,3 +23,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app['Dao.article'] = $app->share(function ($app) {
     return new Blog\Dao\ArticleDAO($app['db']);
 });
+$app['Dao.comment'] = $app->share(function ($app) {
+    $commentDAO = new \Blog\Dao\CommentDAO($app['db']);
+    $commentDAO->setArticleDAO($app['Dao.article']);
+    return $commentDAO;
+});
