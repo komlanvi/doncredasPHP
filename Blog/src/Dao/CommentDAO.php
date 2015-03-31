@@ -8,7 +8,7 @@
 
 namespace Blog\Dao;
 
-use Blog\Domain;
+use Blog\Domain\Comment;
 
 
 class CommentDAO extends DAO{
@@ -34,8 +34,8 @@ class CommentDAO extends DAO{
      * @return array comments
      */
     public function findAllByArticle($articleId) {
-        $sql = "SELECT * FROM comment";
-        $results = $this->getDB()->fetchAll($sql);
+        $sql = "SELECT * FROM comment WHERE id=?";
+        $results = $this->getDB()->fetchAll($sql, array($articleId));
 
         $comments = array();
         foreach($results as $row){
@@ -50,7 +50,7 @@ class CommentDAO extends DAO{
      * @return array $comments
      */
     protected function buildDomainObject(array $row){
-        $comment = new \Blog\Domain\Comment();
+        $comment = new Comment();
         $comment->setId($row["id"]);
         $comment->setAuthor($row["author"]);
         $comment->setContent($row["content"]);
