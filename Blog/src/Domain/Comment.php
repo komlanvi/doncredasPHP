@@ -21,7 +21,7 @@ class Comment {
     /**
      * Comment author
      *
-     * @var string
+     * @var User
      */
     private $author;
 
@@ -57,7 +57,7 @@ class Comment {
     }
 
     /**
-     * @return string
+     * @return User
      */
     public function getAuthor()
     {
@@ -65,7 +65,7 @@ class Comment {
     }
 
     /**
-     * @param string $author
+     * @param User $author
      */
     public function setAuthor($author)
     {
