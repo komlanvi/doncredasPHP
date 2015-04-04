@@ -49,8 +49,15 @@ class User implements UserInterface{
      */
     private $role;
 
+    /**
+     * @param $id
+     */
     public function setId($id) {
         $this->id = $id;
+    }
+
+    public function getId () {
+        return $this->id;
     }
 
     /**
