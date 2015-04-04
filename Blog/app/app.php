@@ -19,12 +19,43 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
 ));
 
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
+
+$app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+    'security.firewalls' => array(
+        'secured' => array(
+            'pattern' => '^/',
+            'anonymous' => true,
+            'logout' => true,
+            'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+            'users' => $app->share(function () use ($app) {
+                return new Blog\Dao\UserDAO($app['db']);
+            }),
+        ),
+    ),
+    'security.role_hierarchy' => array(
+        'ROLE_ADMIN' => array('ROLE_USER'),
+    ),
+    'security.access_rules' => array(
+        array('^/admin', 'ROLE_ADMIN'),
+    ),
+));
+
 // Register services.
 $app['Dao.article'] = $app->share(function ($app) {
     return new Blog\Dao\ArticleDAO($app['db']);
 });
+
+$app['Dao.user'] = $app->share(function ($app) {
+   return new Blog\Dao\UserDAO($app['db']);
+});
+
 $app['Dao.comment'] = $app->share(function ($app) {
     $commentDAO = new \Blog\Dao\CommentDAO($app['db']);
     $commentDAO->setArticleDAO($app['Dao.article']);
+    $commentDAO->setUserDAO($app['Dao.user']);
     return $commentDAO;
 });
