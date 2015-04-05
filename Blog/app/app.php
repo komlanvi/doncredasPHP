@@ -19,11 +19,19 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
 ));
 
+$app['twig'] = $app->share($app->extend('twig', function(Twig_Environment $twig, $app) {
+    $twig->addExtension(new Twig_Extensions_Extension_Text());
+    return $twig;
+}));
+
+$app->register(new Silex\Provider\ValidatorServiceProvider());
+
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
 
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
         'secured' => array(
@@ -54,7 +62,7 @@ $app['Dao.user'] = $app->share(function ($app) {
 });
 
 $app['Dao.comment'] = $app->share(function ($app) {
-    $commentDAO = new \Blog\Dao\CommentDAO($app['db']);
+    $commentDAO = new Blog\Dao\CommentDAO($app['db']);
     $commentDAO->setArticleDAO($app['Dao.article']);
     $commentDAO->setUserDAO($app['Dao.user']);
     return $commentDAO;
