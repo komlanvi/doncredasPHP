@@ -33,6 +33,57 @@ class UserDAO extends DAO implements UserProviderInterface{
         }
     }
 
+    /**
+     * @return array
+     */
+    public function findAll() {
+        $sql = "SELECT * FROM blog_user ORDER BY role, username";
+        $result = $this->getDb()->fetchAll($sql);
+
+        // Convert query result to an array of domain objects
+        $entities = array();
+        foreach ($result as $row) {
+            $id = $row['id'];
+            $entities[$id] = $this->buildDomainObject($row);
+        }
+        return $entities;
+    }
+
+    /**
+     * Saves a user into the database.
+     *
+     * @param \Blog\Domain\User $user The user to save
+     */
+    public function save(User $user) {
+        $userData = array(
+            'username' => $user->getUsername(),
+            'salt' => $user->getSalt(),
+            'password' => $user->getPassword(),
+            'role' => $user->getRole()
+        );
+
+        if ($user->getId()) {
+            // The user has already been saved : update it
+            $this->getDb()->update('blog_user', $userData, array('id' => $user->getId()));
+        } else {
+            // The user has never been saved : insert it
+            $this->getDb()->insert('t_user', $userData);
+            // Get the id of the newly created user and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $user->setId($id);
+        }
+    }
+
+    /**
+     * Removes a user from the database.
+     *
+     * @param @param integer $id The user id.
+     */
+    public function delete($id) {
+        // Delete the user
+        $this->getDb()->delete('user', array('id' => $id));
+    }
+
 
     /**
      * @param string
