@@ -80,6 +80,67 @@ class CommentDAO extends DAO{
     }
 
     /**
+     * @return array
+     */
+    public function findAll() {
+        $sql = "SELECT * FROM comment ORDER BY id DESC";
+        $result = $this->getDb()->fetchAll($sql);
+
+        // Convert query result to an array of domain objects
+        $entities = array();
+        foreach ($result as $row) {
+            $id = $row['id'];
+            $entities[$id] = $this->buildDomainObject($row);
+        }
+        return $entities;
+    }
+
+    /**
+     * Returns a comment matching the supplied id.
+     *
+     * @param integer $id The comment id
+     * @return Comment
+     * @throws \Exception
+     */
+    public function find($id) {
+        $sql = "select * from comment where id = ?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+
+        if ($row)
+            return $this->buildDomainObject($row);
+        else
+            throw new \Exception("No comment matching id " . $id);
+    }
+
+    /**
+     * Removes a comment from the database.
+     *
+     * @param integer $id The comment id
+     */
+    public function delete($id) {
+        // Delete the comment
+        $this->getDb()->delete('comment', array('id' => $id));
+    }
+
+    /**
+     * @param $articleId
+     *
+     * @throws \Doctrine\DBAL\Exception\InvalidArgumentException
+     */
+    public function deleteAllByArticle($articleId) {
+        $this->getDb()->delete('comment', array('article_id' => $articleId));
+    }
+
+    /**
+     * Removes all comments for a user
+     *
+     * @param integer $userId The id of the user
+     */
+    public function deleteAllByUser($userId) {
+        $this->getDb()->delete('comment', array('user_id' => $userId));
+    }
+
+    /**
      * @param array $row
      * @return array $comment
      */
