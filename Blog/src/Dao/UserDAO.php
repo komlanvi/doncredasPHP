@@ -67,7 +67,7 @@ class UserDAO extends DAO implements UserProviderInterface{
             $this->getDb()->update('blog_user', $userData, array('id' => $user->getId()));
         } else {
             // The user has never been saved : insert it
-            $this->getDb()->insert('t_user', $userData);
+            $this->getDb()->insert('blog_user', $userData);
             // Get the id of the newly created user and set it on the entity.
             $id = $this->getDb()->lastInsertId();
             $user->setId($id);
@@ -81,7 +81,7 @@ class UserDAO extends DAO implements UserProviderInterface{
      */
     public function delete($id) {
         // Delete the user
-        $this->getDb()->delete('user', array('id' => $id));
+        $this->getDb()->delete('blog_user', array('id' => $id));
     }
 
 
