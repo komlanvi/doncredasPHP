@@ -50,6 +50,9 @@
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    {% if app.security.token and is_granted('ROLE_ADMIN') %}
+                        <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ app.request.basepath }}/admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
+                    {% endif %}
                     <li><a href="https://it.linkedin.com/in/doncredas/" target="_blank"><i class="fa fa-linkedin-square"></i> LinkedIn</a></li>
                     <li><a href="https://www.facebook.com/doncredas" target="_blank"><i class="fa fa-facebook-square"></i> Facebook</a></li>
                     <li><a href="https://twitter.com/doncredas" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a></li>
@@ -71,10 +74,8 @@
     {% endblock %}
 </div>
 <div class="container">
-    <div id="main">
-        {% block content %}
-        {% endblock %}
-    </div>
+    {% block content %}
+    {% endblock %}
     <hr>
     <footer>
         © doncredas 2015 <span class="pull-right"><a href="https://github.com/doncredas/doncredasPHP" target="_blank">Code source</a></span>

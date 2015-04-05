@@ -2,8 +2,8 @@
 {% block content %}
     {% for article in articles %}
         <article>
-            <h2><a class="titreLink" href="{{ app.request.basepath }}/article/{{ article.id }}">{{ article.titre }}</a> </h2>
-            <p> {{ article.contenu }}</p>
+            <h2><a class="titreLink" href="{{ app.request.basepath }}/article/{{ article.id }}">{{ article.title }}</a> </h2>
+            <p> {{ article.content }}</p>
         </article>
     {% endfor %}
 {% endblock %}
