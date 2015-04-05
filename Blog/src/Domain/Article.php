@@ -21,28 +21,28 @@ class Article {
      * Article title
      * @var string
      */
-    private $titre;
+    private $title;
 
     /**
      * Article content
      * @var string
      */
-    private $contenu;
+    private $content;
 
     /**
      * @return string
      */
-    public function getTitre()
+    public function getTitle()
     {
-        return $this->titre;
+        return $this->title;
     }
 
     /**
-     * @param string $titre
+     * @param string $title
      */
-    public function setTitre($titre)
+    public function setTitle($title)
     {
-        $this->titre = $titre;
+        $this->title = $title;
     }
 
     /**
@@ -64,17 +64,17 @@ class Article {
     /**
      * @return string
      */
-    public function getContenu()
+    public function getContent()
     {
-        return $this->contenu;
+        return $this->content;
     }
 
     /**
-     * @param string $contenu
+     * @param string $content
      */
-    public function setContenu($contenu)
+    public function setContent($content)
     {
-        $this->contenu = $contenu;
+        $this->content = $content;
     }
 
 }
