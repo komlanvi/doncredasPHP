@@ -48,6 +48,40 @@ class ArticleDAO extends DAO{
     }
 
     /**
+     * Saves an article into the database.
+     *
+     * @param \Blog\Domain\Article $article The article to save
+     */
+    public function save(Article $article) {
+        $articleData = array(
+            'title' => $article->getTitle(),
+            'content' => $article->getContent(),
+        );
+
+        if ($article->getId()) {
+            // The article has already been saved : update it
+            $this->getDb()->update('article', $articleData, array('id' => $article->getId()));
+        } else {
+            // The article has never been saved : insert it
+            $this->getDb()->insert('article', $articleData);
+            // Get the id of the newly created article and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $article->setId($id);
+        }
+    }
+
+    /**
+     * Removes an article from the database.
+     *
+     * @param integer $id The article id.
+     */
+    public function delete($id) {
+        // Delete the article
+        $this->getDb()->delete('article', array('id' => $id));
+    }
+
+
+    /**
      * Creates an Article object based on a DB row.
      *
      * @param array $row The DB row containing Article data.
@@ -56,8 +90,8 @@ class ArticleDAO extends DAO{
     protected function buildDomainObject(array $row) {
         $article = new Article();
         $article->setId($row['id']);
-        $article->setTitre($row['titre']);
-        $article->setContenu($row['contenu']);
+        $article->setTitle($row['title']);
+        $article->setContent($row['content']);
         return $article;
     }
 }
