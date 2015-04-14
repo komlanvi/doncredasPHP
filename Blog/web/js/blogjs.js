@@ -7,4 +7,10 @@ jQuery(function ($) {
         lineHeight: 1.6,
         backgroundColor: "#FFF"
     });
+
+    //Set the carousel options
+    $('#quote-carousel').carousel({
+        pause: true,
+        interval: 4000
+    });
 });
