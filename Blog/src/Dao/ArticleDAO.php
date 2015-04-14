@@ -33,7 +33,7 @@ class ArticleDAO extends DAO{
 
     /**
      * @param integer $articleId
-     * @return ArticleDAO
+     * @return Article
      * @throws \Exception
      */
     public function findArticle($articleId) {
@@ -43,7 +43,7 @@ class ArticleDAO extends DAO{
         if ($row) {
             return $this->buildDomainObject($row);
         } else {
-            return new \Exception("No article matching id: " .$articleId);
+            throw new \Exception("No article matching id: " .$articleId);
         }
     }
 

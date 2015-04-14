@@ -52,7 +52,7 @@ class UserDAO extends DAO implements UserProviderInterface{
     /**
      * Saves a user into the database.
      *
-     * @param \Blog\Domain\User $user The user to save
+     * @param User $user The user to save
      */
     public function save(User $user) {
         $userData = array(
@@ -77,7 +77,7 @@ class UserDAO extends DAO implements UserProviderInterface{
     /**
      * Removes a user from the database.
      *
-     * @param @param integer $id The user id.
+     * @param integer $id The user id.
      */
     public function delete($id) {
         // Delete the user
