@@ -1,9 +1,26 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
     {% for article in articles %}
-        <article>
-            <h2><a class="titreLink" href="{{ app.request.basepath }}/article/{{ article.id }}">{{ article.title }}</a> </h2>
-            <p> {{ article.content }}</p>
-        </article>
+        <div class="col-sm-4 col-md-4">
+            <div class="post thumbnail">
+                <div class="post-img-content">
+                    <img {% if loop.index is divisibleby(2) %} src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5"
+                            {% else %} src="{{ app.request.basepath }}/img/bootstrap.png"
+                         {% endif %}class="img-responsive" />
+                    <span class="post-title"><b>{{ article.title }}</b><br /></span>
+                </div>
+                <div class="content">
+                    <div class="author">
+                        By <b>Doncredas</b> |
+                        <time datetime="2014-01-20">January 19th, 2014</time>
+                    </div>
+                    <article>
+                        {{ article.content | truncate(80) }}
+                        <a href="{{ app.request.basepath }}/article/{{ article.id }}">Read more</a>
+                    </article>
+                </div>
+            </div>
+        </div>
+            <!--<p> {{ article.content }}</p>-->
     {% endfor %}
 {% endblock %}

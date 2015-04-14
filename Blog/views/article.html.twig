@@ -1,11 +1,11 @@
 {% extends 'layout.html.twig' %}
-{% block title %} {{ parent() ~ article.title }}  {% endblock %}
+{% block title %} {{ article.title }}  {% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-9" style="font-family: Calibri; font-size: 18px; list-style: none; font-weight: 300; line-height: 30px; text-align: justify;">
             <article>
                 <h2> {{ article.title }} </h2>
-                <p> {{ article.content }}</p>
+                <p> {{ article.content|nl2br }}</p>
                 <h3>Comments</h3>
                 {% for comment in comments %}
                     <strong>{{ comment.author.username }}</strong> said : {{ comment.content }}<br>
@@ -39,6 +39,20 @@
 
             </article>
         </div>
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-3">
+                <a class="twitter-timeline" href="https://twitter.com/doncredas" data-widget-id="585936330603024384">Tweets by @doncredas</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],
+                            p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);
+                        js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+                        fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+                </script>
+            </div>
+        </div>
+
     </div>
 
 {% endblock %}
