@@ -1,245 +1,56 @@
 <?php
 
-use Blog\Domain\Article;
-use Blog\Domain\User;
-use Blog\Form\Type\ArticleType;
-use Blog\Form\Type\UserType;
-use \Symfony\Component\HttpFoundation\Request;
-use Blog\Domain\Comment;
-use Blog\Form\Type\CommentType;
 
-$app->get('/', function () use ($app) {
-    $articles = $app['Dao.article']->findAll();
-    return $app['twig']->render('index.html.twig', array('articles' => $articles));
-})->bind('blog_home_page');
+$app->get('/', 'Blog\Controller\HomeController::indexAction')->bind('blog_home_page');
 
-$app->get('/about', function () use ($app) {
-    return $app['twig']->render('about.html.twig');
-})->bind('about');
+$app->get('/about', 'Blog\Controller\HomeController::aboutAction')->bind('about');
 
-$app->get('/profile', function () use ($app) {
-    return $app['twig']->render('error.html.twig', array('message' => 'Under construction...', 'code' => '007'));
-})->bind('profile');
+$app->get('/profile', 'Blog\Controller\HomeController::profileAction')->bind('profile');
 
-$app->match('/article/{id}', function ($id, Request $request) use ($app) {
-    $article = $app['Dao.article']->findArticle($id);
+$app->match('/article/{id}', 'Blog\Controller\HomeController::viewArticleAction')->assert('id', '\d+');
 
-    $user = $app['security']->getToken()->getUser();
-    $commentFormView = null;
-    if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')) {
-        // A user is fully authenticated : he can add comments
-        $comment = new Comment();
-        $comment->setArticle($article);
-        $comment->setAuthor($user);
-        $commentForm = $app['form.factory']->create(new CommentType(), $comment);
-        $commentForm->handleRequest($request);
-
-        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $app['Dao.comment']->save($comment);
-            $app['session']->getFlashBag()->add('success', 'Your comment was succesfully added.');
-        }
-        $commentFormView = $commentForm->createView();
-    }
-    $comments = $app['Dao.comment']->findAllByArticle($id);
-    return $app['twig']->render('article.html.twig', array(
-        'article' => $article,
-        'comments' => $comments,
-        'commentForm' => $commentFormView
-    ));
-})->assert('id', '\d+');
-
-$app->get('/login', function (Request $request) use ($app) {
-    return $app['twig']->render('login.html.twig', array(
-        'error'         => $app['security.last_error']($request),
-        'last_username' => $app['session']->get('_security.last_username'),
-    ));
-})->bind('login');
+$app->get('/login', 'Blog\Controller\HomeController::loginAction')->bind('login');
 
 
 // Admin home page
-$app->get('/admin', function() use ($app) {
-    $articles = $app['Dao.article']->findAll();
-    $comments = $app['Dao.comment']->findAll();
-    $users = $app['Dao.user']->findAll();
-    return $app['twig']->render('admin.html.twig', array(
-        'articles' => $articles,
-        'comments' => $comments,
-        'users' => $users));
-})->bind('admin');
+$app->get('/admin', 'Blog\Controller\AdminController::indexAction')->bind('admin');
 
 // Add a new article
-$app->match('/admin/article/add', function(Request $request) use ($app) {
-    $article = new Article();
-    $articleForm = $app['form.factory']->create(new ArticleType(), $article);
-    $articleForm->handleRequest($request);
-    if ($articleForm->isSubmitted() && $articleForm->isValid()) {
-        $app['Dao.article']->save($article);
-        $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
-    }
-    return $app['twig']->render('article_form.html.twig', array(
-        'title' => 'New article',
-        'articleForm' => $articleForm->createView()));
-});
+$app->match('/admin/article/add', 'Blog\Controller\AdminController::addArticleAction');
 
 // Edit an existing article
-$app->match('/admin/article/{id}/edit', function($id, Request $request) use ($app) {
-    $article = $app['Dao.article']->findArticle($id);
-    $articleForm = $app['form.factory']->create(new ArticleType(), $article);
-    $articleForm->handleRequest($request);
-    if ($articleForm->isSubmitted() && $articleForm->isValid()) {
-        $app['Dao.article']->save($article);
-        $app['session']->getFlashBag()->add('success', 'The article was succesfully updated.');
-    }
-    return $app['twig']->render('article_form.html.twig', array(
-        'title' => 'Edit article',
-        'articleForm' => $articleForm->createView()));
-})->assert('id', '\d+');
+$app->match('/admin/article/{id}/edit', 'Blog\Controller\AdminController::editArticleAction')->assert('id', '\d+');
 
 // Remove an article
-$app->get('/admin/article/{id}/delete', function($id, Request $request) use ($app) {
-    // Delete all associated comments
-    $app['Dao.comment']->deleteAllByArticle($id);
-    // Delete the article
-    $app['Dao.article']->delete($id);
-    $app['session']->getFlashBag()->add('success', 'The article was succesfully removed.');
-    return $app->redirect($app['url_generator']->generate('admin'));
-});
+$app->get('/admin/article/{id}/delete', 'Blog\Controller\AdminController::deleteArticleAction');
 
 // Edit an existing comment
-$app->match('/admin/comment/{id}/edit', function($id, Request $request) use ($app) {
-    $comment = $app['Dao.comment']->find($id);
-    $commentForm = $app['form.factory']->create(new CommentType(), $comment);
-    $commentForm->handleRequest($request);
-    if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-        $app['Dao.comment']->save($comment);
-        $app['session']->getFlashBag()->add('success', 'The comment was succesfully updated.');
-    }
-    return $app['twig']->render('comment_form.html.twig', array(
-        'title' => 'Edit comment',
-        'commentForm' => $commentForm->createView()));
-});
+$app->match('/admin/comment/{id}/edit', 'Blog\Controller\AdminController::editCommentAction');
 
 // Remove a comment
-$app->get('/admin/comment/{id}/delete', function($id, Request $request) use ($app) {
-    $app['Dao.comment']->delete($id);
-    $app['session']->getFlashBag()->add('success', 'The comment was succesfully removed.');
-    return $app->redirect($app['url_generator']->generate('admin'));
-})->assert('id', '\d+');
+$app->get('/admin/comment/{id}/delete', 'Blog\Controller\AdminController::deleteCommentAction')->assert('id', '\d+');
 
 // Add a user
-$app->match('/admin/user/add', function(Request $request) use ($app) {
-    $user = new User();
-    $userForm = $app['form.factory']->create(new UserType(), $user);
-    $userForm->handleRequest($request);
-    if ($userForm->isSubmitted() && $userForm->isValid()) {
-        // generate a random salt value
-        $salt = substr(md5(time()), 0, 23);
-        $user->setSalt($salt);
-        $plainPassword = $user->getPassword();
-        // find the default encoder
-        $encoder = $app['security.encoder.digest'];
-        // compute the encoded password
-        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-        $user->setPassword($password);
-        $app['Dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
-    }
-    return $app['twig']->render('user_form.html.twig', array(
-        'title' => 'New user',
-        'userForm' => $userForm->createView()));
-});
+$app->match('/admin/user/add', 'Blog\Controller\AdminController::addUserAction');
 
 // Edit an existing user
-$app->match('/admin/user/{id}/edit', function($id, Request $request) use ($app) {
-    $user = $app['Dao.user']->findUserById($id);
-    $userForm = $app['form.factory']->create(new UserType(), $user);
-    $userForm->handleRequest($request);
-    if ($userForm->isSubmitted() && $userForm->isValid()) {
-        $plainPassword = $user->getPassword();
-        // find the encoder for the user
-        $encoder = $app['security.encoder_factory']->getEncoder($user);
-        // compute the encoded password
-        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
-        $user->setPassword($password);
-        $app['Dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
-    }
-    return $app['twig']->render('user_form.html.twig', array(
-        'title' => 'Edit user',
-        'userForm' => $userForm->createView()));
-})->assert('id', '\d+');
+$app->match('/admin/user/{id}/edit', 'Blog\Controller\AdminController::editUserAction')->assert('id', '\d+');
 
 // Remove a user
-$app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) {
-    // Delete all associated comments
-    $app['Dao.comment']->deleteAllByUser($id);
-    // Delete the user
-    $app['Dao.user']->delete($id);
-    $app['session']->getFlashBag()->add('success', 'The user was succesfully removed.');
-    return $app->redirect($app['url_generator']->generate('admin'));
-})->assert('id', '\d+');
+$app->get('/admin/user/{id}/delete', 'Blog\Controller\AdminController::deleteUserAction')->assert('id', '\d+');
 
 /*
  * JSON API
  */
 
 // API : get all articles
-$app->get('/api/articles', function() use ($app) {
-    $articles = $app['Dao.article']->findAll();
-    // Convert an array of objects ($articles) into an array of associative arrays ($responseData)
-    $responseData = array();
-    foreach ($articles as $article) {
-        $responseData[] = array(
-            'id' => $article->getId(),
-            'title' => $article->getTitle(),
-            'content' => $article->getContent()
-        );
-    }
-    // Create and return a JSON response
-    return $app->json($responseData);
-});
+$app->get('/api/articles', 'Blog\Controller\ApiController::getAllArticlesAction');
 
 // API : get an article
-$app->get('/api/article/{id}', function($id) use ($app) {
-    $article = $app['Dao.article']->findArticle($id);
-    // Convert an object ($article) into an associative array ($responseData)
-    $responseData = array(
-        'id' => $article->getId(),
-        'title' => $article->getTitle(),
-        'content' => $article->getContent()
-    );
-    // Create and return a JSON response
-    return $app->json($responseData);
-});
+$app->get('/api/article/{id}', 'Blog\Controller\ApiController::getArticleAction');
 
 // API : create a new article
-$app->post('/api/article', function(Request $request) use ($app) {
-    // Check request parameters
-    if (!$request->request->has('title')) {
-        return $app->json('Missing required parameter: title', 400);
-    }
-    if (!$request->request->has('content')) {
-        return $app->json('Missing required parameter: content', 400);
-    }
-    // Build and save the new article
-    $article = new Article();
-    $article->setTitle($request->request->get('title'));
-    $article->setContent($request->request->get('content'));
-    $app['Dao.article']->save($article);
-    // Convert an object ($article) into an associative array ($responseData)
-    $responseData = array(
-        'id' => $article->getId(),
-        'title' => $article->getTitle(),
-        'content' => $article->getContent()
-    );
-    return $app->json($responseData, 201);  // 201 = Created
-});
+$app->post('/api/article', 'Blog\Controller\ApiController::addArticleAction');
 
 // API : delete an existing article
-$app->delete('/api/article/{id}', function ($id) use ($app) {
-    // Delete all associated comments
-    $app['Dao.comment']->deleteAllByArticle($id);
-    // Delete the article
-    $app['Dao.article']->delete($id);
-    return $app->json('No Content', 204);  // 204 = No content
-});
+$app->delete('/api/article/{id}', 'Blog\Controller\ApiController::deleteArticleAction');
