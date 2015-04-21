@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="abcard hovercard">
+        <div class="avatar">
+            <img alt="profile" src="{{ app.request.basepath }}/img/profile.jpg">
+        </div>
+        <div class="info">
+            <div class="title">
+                <a>Amegbleame Komlanvi AC</a>
+            </div>
+            <div class="desc">Computer Engineering student</div>
+            <div class="desc">Junior PHP Developer</div>
+            <div class="desc">Tech geek</div>
+        </div>
+        <div class="bottom">
+            <a class="btn btn-primary btn-twitter btn-sm btn-costume"
+               href="https://twitter.com/doncredas" target="_blank">
+                <i class="fa fa-twitter"></i>
+            </a>
+            <a class="btn btn-primary btn-sm btn-costume" rel="publisher"
+               href="https://it.linkedin.com/in/doncredas/" target="_blank">
+                <i class="fa fa-linkedin">
+                </i>
+            </a>
+            <a class="btn btn-primary btn-sm btn-costume" rel="publisher"
+               href="https://www.facebook.com/doncredas" target="_blank">
+                <i class="fa fa-facebook"></i>
+            </a>
+            <a class="btn btn-warning btn-sm btn-costume" rel="publisher"
+               href="https://github.com/doncredas" target="_blank">
+                <i class="fa fa-github"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 30px;">
+    <div class="row text-center" style="margin-bottom: 10px;">
+        <a><h3>Check below my 5 stars fiverr profil</h3></a>
+    </div>
+    <div class="col-md-offset-3">
+        <!-- Put this code anywhere in the body of your page where you want the badge to show up. -->
+
+        <div itemscope itemtype='http://schema.org/Person' class='fiverr-seller-widget' style='display: inline-block;'>
+            <a itemprop='url' href=https://www.fiverr.com/doncredas rel="nofollow" target="_blank" style='display: inline-block;'>
+                <div class='fiverr-seller-content' id='fiverr-seller-widget-content-f40403d3-fa85-407f-a325-f3dfe4b21ced' itemprop='contentURL' style='display: none;'></div>
+                <div id='fiverr-widget-seller-data' style='display: none;'>
+                    <div itemprop='name' >doncredas</div>
+                    <div itemscope itemtype='http://schema.org/Organization'><span itemprop='name'>Fiverr</span></div>
+                    <div itemprop='jobtitle'>Seller</div>
+                    <div itemprop='description'>Hi, I'm doncredas from Italy. Freelance and passionate about web programming. I can speak English, French and Italian and I'm here to help people through my experience and I also hope get  from you when needed...  </div>
+                </div>
+            </a>
+        </div>
+
+        <script id='fiverr-seller-widget-script-f40403d3-fa85-407f-a325-f3dfe4b21ced' src='https://widgets.fiverr.com/api/v1/seller/doncredas?widget_id=f40403d3-fa85-407f-a325-f3dfe4b21ced' data-config='{"category_name":"Programming & Tech"}' async='true' defer='true'></script>
+
+    </div>
+</div>
+<div class="row">
+    <a class="twitter-timeline" href="https://twitter.com/doncredas" data-widget-id="585936330603024384">Tweets by @doncredas</a>
+</div>
+{% block quote %}
+    {% include 'quote.html.twig' %}
+{% endblock %}
