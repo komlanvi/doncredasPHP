@@ -1,6 +1,6 @@
 # doncredasPHP  
 #### My personal home page  
-Visit [doncredasPHP](http://doncredas.olympe.in)  
+Visit [doncredasPHP](http://www.doncredas.com)  
 * based on Silex (The PHP micro-framework based on the Symfony2 Components) 
 * Uses Doctrine DBAL for accessing the database.
 * Twig for its templates.
