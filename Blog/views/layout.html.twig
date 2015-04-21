@@ -4,18 +4,28 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %} Doncredas - Blog {% endblock %}</title>
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="{{ app.request.basepath }}/lib/bootstrap/css/bootstrap.min.css"/>
+    <title>{% block title %} Home - Doncredas {% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="{{ app.request.basepath }}/img/favicon.ico">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="{{ app.request.basepath }}/css/blogstyle.css" rel="stylesheet">
-    <link href="{{ app.request.basepath }}/css/article_list.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ app.request.basepath }}/css/profile.css">
+    <link rel="stylesheet" href="{{ app.request.basepath }}/css/quote.css">
+    <link rel="stylesheet" href="{{ app.request.basepath }}/css/login.css">
+    <link href="{{ app.request.basepath }}/css/style.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Stalemate' rel='stylesheet' type='text/css'>
-    <script src="//cdn.ckeditor.com/4.4.7/full/ckeditor.js"></script>
 </head>
 <body>
-<header style="font-weight: bold; margin-bottom: 0;">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.3";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<nav role="navigation">
+    <div id="myNavMenu" class="navbar navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -24,7 +34,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ path('blog_home_page') }}">Blog</a>
+                <a class="navbar-brand" href="{{ path('blog_home_page') }}">Home</a>
             </div>
 
             <div id="navbar" class="navbar-collapse collapse">
@@ -36,6 +46,7 @@
                                 Welcome, {{ app.security.token.user.username }}
                                 <b class="caret"></b>
                             </a>
+
                             <ul class="dropdown-menu">
                                 <li><a href="{{ path('profile') }}">Profile</a></li>
                                 <li><a href="{{ path('logout') }}">Log out</a></li>
@@ -43,39 +54,37 @@
                         </li>
                     {% else %}
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span>
-                                Not connected
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ path('login') }}">Log in</a></li>
-                            </ul>
+                            <a id="currentTime" href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a href="{{ path('about') }}">DONCREDAS</a></li>
+                    <li><a href="{{ path('about') }}">About me</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if app.security.token and is_granted('ROLE_ADMIN') %}
+                        <li><a id="currentTime"></a></li>
                         <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ app.request.basepath }}/admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
                     {% endif %}
                 </ul>
             </div>
         </div>
+    </div>
+</nav>
+<header>
+    {% block jumbotron %}
+    <div class="jumbotron" style="height: 110px; padding-bottom: 5px; padding-top: 40px; text-align: center; background-color: #ffffff;">
+
+            <div class="container">
+                <h1 id="logo">Ciao, Sono Amegbleame Komlanvi</h1>
+            </div>
 
     </div>
-</header>
-<div class="jumbotron" style="padding-bottom: 0; text-align: center;">
-    {% block jumbotron %}
-    <div class="container">
-        <header>
-            <h1 id="log">Ciao, Sono Amegbleame Komlanvi</h1>
-            <h4>Il web la mia passione</h4>
-        </header>
-    </div>
     {% endblock %}
-</div>
+    <hr/>
+</header>
 <div class="container">
     {% for flashMessage in app.session.flashbag.get('success') %}
     <div class="alert alert-success">
@@ -85,17 +94,24 @@
     {% block content %}
     {% endblock %}
     <hr>
-    <footer style="margin-bottom: 15px;">
-        {% block quote %}
-        {% include 'quote.html.twig' %}
-        {% endblock %}
-        <div class="row">
-            © doncredas 2015 <span class="pull-right"><a href="https://github.com/doncredas/doncredasPHP" target="_blank">Code source</a></span>
-        </div>
+    <footer class="col-md-12" style="margin-bottom: 50px;">
+        <span class="pull-left">Copyright © 2015 - doncredas</span> <span class="pull-right"><a href="https://github.com/doncredas/doncredasPHP" target="_blank">Code source</a></span>
     </footer>
-    <script src="{{ app.request.basepath }}/lib/js/jquery.js"></script>
-    <script src="{{ app.request.basepath }}/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="{{ app.request.basepath }}/lib/js/blogjs.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="{{ app.request.basepath }}/lib/js/quotejs.js"></script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],
+                p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);
+            js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    </script>
+    <script>
+        var myVar=setInterval(function(){myTimer()},1000);
+        function myTimer() {
+            var d = new Date();
+            document.getElementById("currentTime").innerHTML = d.toLocaleTimeString();
+        }
+    </script>
 </div>
 </body>
 </html>

@@ -1,58 +1,39 @@
-{% extends 'layout.html.twig' %}
+{% extends 'index.html.twig' %}
 
-{% block jumbotron %}
-<div class="jumbotron" style="padding-bottom: 0; text-align: center;">
-    <div class="container">
-        <div class="col-md-5">
-            <div class="abcard hovercard">
-                <div class="avatar">
-                    <img alt="profile" src="{{ app.request.basepath }}/img/profile.jpg">
-                </div>
-                <div class="info">
-                    <div class="title">
-                        <a href="#">Amegbleame Komlanvi AC</a>
-                    </div>
-                    <div class="desc">Computer Engineering student</div>
-                    <div class="desc">Junior PHP Developer</div>
-                    <div class="desc">Tech geek</div>
-                </div>
-                <div class="bottom">
-                    <a class="btn btn-primary btn-twitter btn-sm btn-costume"
-                       href="https://twitter.com/doncredas" target="_blank">
-                        <i class="fa fa-twitter"></i>
-                    </a>
-                    <a class="btn btn-primary btn-sm btn-costume" rel="publisher"
-                       href="https://it.linkedin.com/in/doncredas/" target="_blank">
-                        <i class="fa fa-linkedin">
-                        </i>
-                    </a>
-                    <a class="btn btn-primary btn-sm btn-costume" rel="publisher"
-                       href="https://www.facebook.com/doncredas" target="_blank">
-                        <i class="fa fa-facebook"></i>
-                    </a>
-                    <a class="btn btn-warning btn-sm btn-costume" rel="publisher"
-                       href="https://github.com/doncredas" target="_blank">
-                        <i class="fa fa-github"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7">
-            <h1>Doncredas</h1>
-            <p>Doncredas Personal Home Page (PHP)</p>
-            <p>My dream: Become a Full-Stack Web Software Engineer</p>
-            <p><a class="btn btn-lg btn-primary" href="{{ path('blog_home_page') }}">Blog</a></p>
-        </div>
-    </div>
-</div>
-{% endblock %}
-{% block content %}
-    <div class="row">
-        <h1 style="color: #357ebd; font-size: 100px; text-align: center;">
-            WELCOME
-        </h1>
-    </div>
-{% endblock %}
+{% block title %} About Me - Doncredas {% endblock %}
 
-{% block quote %}
+{% block main %}
+    <img class="pull-left img-thumbnail" alt="profile" src="{{ app.request.basepath }}/img/profile.jpg" style="margin-right: 10px; width: 175px; height: 200px;">
+    <p>
+        Hi, my name is <strong>AMEGBLEAME Komlanvi Antonio-Credo</strong>. I'm from Togo and landed in 2012 in Italia
+        to continue my studies. Right now i'm student in Computer Engineering at the University of Calabry (Cosenza)
+        since 2012 and very passionate about Software Engineering and specifically focused on Web Software.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.Aenean massa.
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
+    </p>
+    <p>
+        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+        Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+        imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
+        Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
+    </p>
+    <p>
+        Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+        viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
+        Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+    </p>
+    <p>
+        Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero,
+        sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.
+        Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.
+        Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh.
+        Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
+    </p><br/>
+    <p>
+        You can reach me via my Twitter account <a target="_blank" href="https://twitter.com/doncredas">@doncredas</a> or by sending an email to
+        <a href="mailto:doncredas@gmail.com">doncredas@gmail.com</a>.
+    </p>
 {% endblock %}

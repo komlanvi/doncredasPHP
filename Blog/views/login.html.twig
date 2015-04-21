@@ -7,21 +7,16 @@
             <strong>Login failed!</strong> {{ error }}
         </div>
     {% endif %}
-    <div class="card center-block">
-        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-        <p id="profile-name" class="profile-name-card">Doncredas</p>
+    <div class="card col-md-offset-4 col-md-4">
+        <img id="profile-img" class="profile-img-card" src="{{ app.request.basepath }}/img/profile.jpg" />
+        <p id="profile-name" class="profile-name-card">Amegbleame Komlanvi</p>
+        <br/>
         <form class="form-signin" role="form" action="{{ path('login_check') }}" method="post">
-            <span id="reauth-email" class="reauth-email">doncredas@gmail.com</span>
             <div class="form-group">
                 <input type="text" name="_username" id="inputUsername" value="{{ last_username }}" class="form-control" placeholder="Enter your username" required autofocus>
             </div>
             <div class="form-group">
                     <input type="password" name="_password" id="inputPassword" class="form-control" placeholder="Enter your password" required>
-            </div>
-            <div id="remember" class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form><!-- /form -->
