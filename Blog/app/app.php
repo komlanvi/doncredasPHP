@@ -63,17 +63,20 @@ if (isset($app['debug']) && $app['debug']) {
 
 // Register services.
 
-$app['twig'] = $app->share($app->extend('twig', function(Twig_Environment $twig, $app) {
+$app['twig'] = $app->share($app->extend('twig', function(Twig_Environment $twig) {
     $twig->addExtension(new Twig_Extensions_Extension_Text());
     return $twig;
 }));
 
-$app['Dao.article'] = $app->share(function ($app) {
-    return new Blog\Dao\ArticleDAO($app['db']);
+$app['Dao.user'] = $app->share(function ($app) {
+    return new Blog\Dao\UserDAO($app['db']);
 });
 
-$app['Dao.user'] = $app->share(function ($app) {
-   return new Blog\Dao\UserDAO($app['db']);
+$app['Dao.article'] = $app->share(function ($app) {
+    $articleDAO = new Blog\Dao\ArticleDAO($app['db']);
+    $articleDAO->setUserDAO($app['Dao.user']);
+    return $articleDAO;
+
 });
 
 $app['Dao.comment'] = $app->share(function ($app) {
