@@ -48,6 +48,7 @@ class AdminController {
         $articleForm = $app['form.factory']->create(new ArticleType(), $article);
         $articleForm->handleRequest($request);
         if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+            $article->setAddedTime(new \DateTime('NOW'));
             $app['Dao.article']->save($article);
             $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
         }
