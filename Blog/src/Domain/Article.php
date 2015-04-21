@@ -9,6 +9,9 @@
 namespace Blog\Domain;
 
 
+use Author;
+use DateTime;
+
 class Article {
 
     /**
@@ -28,6 +31,16 @@ class Article {
      * @var string
      */
     private $content;
+
+    /**
+     * @var datetime
+     */
+    private $addedTime;
+
+    /**
+     * @var User
+     */
+    private $author;
 
     /**
      * @return string
@@ -76,5 +89,39 @@ class Article {
     {
         $this->content = $content;
     }
+
+    /**
+     * @return DateTime
+     */
+    public function getAddedTime()
+    {
+        return $this->addedTime;
+    }
+
+    /**
+     * @param DateTime $addedTime
+     */
+    public function setAddedTime($addedTime)
+    {
+        $this->addedTime = $addedTime;
+    }
+
+    /**
+     * @return User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param User $author
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
+
 
 }
