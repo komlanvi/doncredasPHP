@@ -8,7 +8,7 @@
 
 namespace Blog\Tests;
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Silex\Application;
 use Silex\WebTestCase;
@@ -67,9 +67,9 @@ class AppTest extends WebTestCase{
             array('/admin'),
             array('/admin/article/add'),
             array('/admin/article/4/edit'),
-            array('/admin/comment/5/edit'),
+            array('/admin/comment/31/edit'),
             array('/admin/user/add'),
-            array('/admin/user/13/edit'),
+            array('/admin/user/7/edit'),
             array('/api/articles'),
             array('/api/article/10'),
         );
