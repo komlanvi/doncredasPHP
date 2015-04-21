@@ -1,0 +1,76 @@
+/* About Us Image */
+
+
+
+.abcard {
+    padding-top: 20px;
+    margin: 10px 0 20px 0;
+    background-color: #ffffff;
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.abcard.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+
+
+.abcard.hovercard .avatar {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.abcard.hovercard .avatar img {
+    width: 200px;
+    height: 225px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.5);
+}
+
+.abcard.hovercard .info {
+    padding: 4px 8px 10px;
+}
+
+.abcard.hovercard .info .title {
+    margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+    color: #262626;
+    vertical-align: middle;
+}
+
+.abcard.hovercard .info .desc {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.abcard.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+
+.btn-costume{ border-radius: 50%; width:32px; height:32px; line-height:18px; !important;  }
+
+
+
+/* END ABOUT US IMAGE */
