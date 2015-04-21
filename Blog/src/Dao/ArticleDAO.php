@@ -14,6 +14,19 @@ use Blog\Domain\Article;
 class ArticleDAO extends DAO{
 
     /**
+     * @var UserDAO
+     */
+    private $userDAO;
+
+
+    /**
+     * @param UserDAO $userDAO
+     */
+    public function setUserDAO (UserDAO $userDAO) {
+        $this->userDAO = $userDAO;
+    }
+
+    /**
      * Return a list of all articles, sorted by date (most recent first).
      *
      * @return array A list of all articles.
@@ -55,6 +68,7 @@ class ArticleDAO extends DAO{
     public function save(Article $article) {
         $articleData = array(
             'title' => $article->getTitle(),
+            'user_id' => $article->getAuthor()->getId(),
             'content' => $article->getContent(),
         );
 
@@ -92,6 +106,14 @@ class ArticleDAO extends DAO{
         $article->setId($row['id']);
         $article->setTitle($row['title']);
         $article->setContent($row['content']);
+        $article->setAddedTime($row['added_time']);
+
+        if(array_key_exists("user_id", $row)) {
+            $userId = $row["user_id"];
+            $author = $this->userDAO->findUserById($userId);
+            $article->setAuthor($author);
+        }
+
         return $article;
     }
 }
