@@ -4,6 +4,6 @@
 jQuery(function ($) {
     //Set the carousel options
     $('#quote-carousel').carousel({
-        interval: 3000
+        interval: 4000
     });
 });
