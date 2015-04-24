@@ -18,37 +18,8 @@
         <br/>
         <br/>
         <p> {{ article.content|nl2br }}</p>
-        <h3>Comments</h3>
-        {% for comment in comments %}
-            <strong>{{ comment.author.username }}</strong> said : {{ comment.content }}<br>
-        {% else %}
-            No comments yet.
-        {% endfor %}
-
-        <h3>Add a comment</h3>
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-        {% if commentForm %}
-            {{ form_start(commentForm) }}
-            <div class="form-group">
-                {{ form_errors(commentForm.content) }}
-                {{ form_widget(commentForm.content, { 'attr':  {
-                    'rows': '4',
-                    'class': 'form-control',
-                    'placeholder': 'Enter your comment'
-                }}) }}
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Publish comment" />
-            </div>
-            {{ form_end(commentForm) }}
-            <div class="fb-comments" data-href="http://developers.facebook.com/docs/plugins/comments/" data-numposts="5" data-colorscheme="light"></div>
-        {% else %}
-            <a href="{{ path('login') }} ">Log in</a> to add comments.
-        {% endif %}
     </article>
+    <h3>Add a comment</h3>
+    <div class="fb-comments" data-href="http://www.doncredas.com" data-width="700" data-numposts="5" data-colorscheme="light"></div>
 
 {% endblock %}
