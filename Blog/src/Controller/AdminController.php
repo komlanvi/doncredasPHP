@@ -51,6 +51,7 @@ class AdminController {
             $article->setAddedTime(new \DateTime('NOW'));
             $app['Dao.article']->save($article);
             $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
         return $app['twig']->render('article_form.html.twig', array(
             'title' => 'New article',
@@ -71,7 +72,8 @@ class AdminController {
         $articleForm->handleRequest($request);
         if ($articleForm->isSubmitted() && $articleForm->isValid()) {
             $app['Dao.article']->save($article);
-            $app['session']->getFlashBag()->add('success', 'The article was succesfully updated.');
+            $app['session']->getFlashBag()->add('success', 'The article was successfully updated.');
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
         return $app['twig']->render('article_form.html.twig', array(
             'title' => 'Edit article',
@@ -84,15 +86,14 @@ class AdminController {
      *
      * @param integer $id
      * @param Application $app
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteArticleAction ($id, Application $app, Request $request) {
+    public function deleteArticleAction ($id, Application $app) {
         // Delete all associated comments
         $app['Dao.comment']->deleteAllByArticle($id);
         // Delete the article
         $app['Dao.article']->delete($id);
-        $app['session']->getFlashBag()->add('success', 'The article was succesfully removed.');
+        $app['session']->getFlashBag()->add('success', 'The article was successfully removed.');
         return $app->redirect($app['url_generator']->generate('admin'));
     }
 
@@ -110,7 +111,8 @@ class AdminController {
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $app['Dao.comment']->save($comment);
-            $app['session']->getFlashBag()->add('success', 'The comment was succesfully updated.');
+            $app['session']->getFlashBag()->add('success', 'The comment was successfully updated.');
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
         return $app['twig']->render('comment_form.html.twig', array(
             'title' => 'Edit comment',
@@ -124,7 +126,7 @@ class AdminController {
      */
     public function deleteCommentAction ($id, Application $app) {
         $app['Dao.comment']->delete($id);
-        $app['session']->getFlashBag()->add('success', 'The comment was succesfully removed.');
+        $app['session']->getFlashBag()->add('success', 'The comment was successfully removed.');
         return $app->redirect($app['url_generator']->generate('admin'));
     }
 
@@ -151,6 +153,7 @@ class AdminController {
             $user->setPassword($password);
             $app['Dao.user']->save($user);
             $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
         return $app['twig']->render('user_form.html.twig', array(
             'title' => 'New user',
@@ -178,7 +181,8 @@ class AdminController {
             $password = $encoder->encodePassword($plainPassword, $user->getSalt());
             $user->setPassword($password);
             $app['Dao.user']->save($user);
-            $app['session']->getFlashBag()->add('success', 'The user was succesfully updated.');
+            $app['session']->getFlashBag()->add('success', 'The user was successfully updated.');
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
         return $app['twig']->render('user_form.html.twig', array(
             'title' => 'Edit user',
@@ -197,7 +201,7 @@ class AdminController {
         $app['Dao.comment']->deleteAllByUser($id);
         // Delete the user
         $app['Dao.user']->delete($id);
-        $app['session']->getFlashBag()->add('success', 'The user was succesfully removed.');
+        $app['session']->getFlashBag()->add('success', 'The user was successfully removed.');
         return $app->redirect($app['url_generator']->generate('admin'));
     }
 
