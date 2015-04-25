@@ -3,8 +3,9 @@ DONCREDASPHP
 
 My personal home page
 ---------------------
+DoncredasPHP is my personal home page built with PHP 5.4 and MySQL 5
 
-Visit [doncredas](http://www.doncredas.com)  
+Visit [doncredasPHP](http://www.doncredas.com)  
 * based on Silex (The PHP micro-framework based on the Symfony2 Components) 
 * Uses Doctrine DBAL for accessing the database.
 * Twig for its templates.
