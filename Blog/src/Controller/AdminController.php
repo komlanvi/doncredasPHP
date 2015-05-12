@@ -47,8 +47,14 @@ class AdminController {
         $article = new Article();
         $articleForm = $app['form.factory']->create(new ArticleType(), $article);
         $articleForm->handleRequest($request);
+        $token = $app['security']->getToken();
         if ($articleForm->isSubmitted() && $articleForm->isValid()) {
-            $article->setAddedTime(new \DateTime('NOW'));
+            $now = new \DateTime();
+            $article->setAddedTime($now->format('Y-m-d H:i:s'));
+            if (null !== $token)
+            {
+                $article->setAuthor($token->getUser());
+            }
             $app['Dao.article']->save($article);
             $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
             return $app->redirect($app['url_generator']->generate('admin'));
@@ -73,7 +79,7 @@ class AdminController {
         if ($articleForm->isSubmitted() && $articleForm->isValid()) {
             $app['Dao.article']->save($article);
             $app['session']->getFlashBag()->add('success', 'The article was successfully updated.');
-            return $app->redirect($app['url_generator']->generate('admin'));
+            //return $app->redirect($app['url_generator']->generate('admin'));
         }
         return $app['twig']->render('article_form.html.twig', array(
             'title' => 'Edit article',
