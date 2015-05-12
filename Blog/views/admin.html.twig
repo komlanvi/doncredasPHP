@@ -33,8 +33,8 @@
                         </thead>
                         {% for article in articles %}
                             <tr>
-                                <td><a class="articleTitle" href="{{ app.request.basepath }}/article/{{ article.id }}">{{ article.title }}</a></td>
-                                <td>{{ article.content | truncate(60) }}</td>
+                                <td><a class="articleTitle" href="{{ app.request.basepath }}/article/{{ article.id }}">{{ article.title|markdown }}</a></td>
+                                <td>{{ article.content|truncate(60) }}</td>
                                 <td>
                                     <a href="{{ app.request.basepath }}/admin/article/{{ article.id }}/edit" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                     <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#articleDialog{{ article.id }}"><span class="glyphicon glyphicon-remove"></span>
@@ -80,7 +80,7 @@
                         </thead>
                         {% for comment in comments %}
                             <tr>
-                                <td><a class="articleTitle" href="{{ app.request.basepath }}/article/{{ comment.article.id }}">{{ comment.article.title }}</a></td>
+                                <td><a class="articleTitle" href="{{ app.request.basepath }}/article/{{ comment.article.id }}">{{ comment.article.title|markdown }}</a></td>
                                 <td>{{ comment.author.username }}</td>
                                 <td>{{ comment.content | truncate(60) }}</td>
                                 <td>

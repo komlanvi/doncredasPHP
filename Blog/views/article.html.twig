@@ -1,24 +1,24 @@
 {% extends 'index.html.twig' %}
 
-{% block title %} {{ article.title }}  {% endblock %}
+{% block title %} {{ article.title|markdown }}  {% endblock %}
 
 {% block main %}
     <article>
-        <h2> {{ article.title }} </h2>
-        <div>
-            <span class="label label-info">Posted on </span>
-            <time datetime="{{ article.addedTime }}" class="label label-primary">
-                {{ article.addedTime|date('d-m-Y H:i:s') }}
-            </time>
-            <div class="pull-right">
-                <span class="label label-default">By </span>
-                <span class="label label-success">{{ article.author.username }}</span>
-            </div>
-        </div>
-        <br/>
-        <br/>
-        <p> {{ article.content|nl2br }}</p>
+        <h1> {{ article.title|markdown }} </h1>
+        <p> {{ article.content|markdown|raw }}</p>
     </article>
+    <br/>
+    <br/>
+    <div>
+        <span class="label label-info">Posted on </span>
+        <time datetime="{{ article.addedTime }}" class="label label-primary">
+            {{ article.addedTime|date('d-m-Y, H:i:s') }}
+        </time>
+        <div class="pull-right">
+            <span class="label label-default">By </span>
+            <span class="label label-success">{{ article.author.username }}</span>
+        </div>
+    </div>
     <h3>Add a comment</h3>
     <div class="fb-comments" data-href="" data-width="700" data-numposts="5" data-colorscheme="light"></div>
 
