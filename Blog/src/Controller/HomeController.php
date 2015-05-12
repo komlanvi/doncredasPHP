@@ -33,32 +33,13 @@ class HomeController
     /**
      * @param integer $id Article id
      * @param Application $app
-     * @param Request $request
      * @return mixed
      */
-    public function viewArticleAction($id, Application $app, Request $request) {
+    public function viewArticleAction($id, Application $app) {
         $article = $app['Dao.article']->findArticle($id);
 
-        $user = $app['security']->getToken()->getUser();
-        $commentFormView = null;
-        if ($app['security']->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // A user is fully authenticated : he can add comments
-            $comment = new Comment();
-            $comment->setArticle($article);
-            $comment->setAuthor($user);
-            $commentForm = $app['form.factory']->create(new CommentType(), $comment);
-            $commentForm->handleRequest($request);
-            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-                $app['Dao.comment']->save($comment);
-                $app['session']->getFlashBag()->add('success', 'Your comment was succesfully added.');
-            }
-            $commentFormView = $commentForm->createView();
-        }
-        $comments = $app['Dao.comment']->findAllByArticle($id);
         return $app['twig']->render('article.html.twig', array(
-            'article' => $article,
-            'comments' => $comments,
-            'commentForm' => $commentFormView
+            'article' => $article
         ));
     }
 
