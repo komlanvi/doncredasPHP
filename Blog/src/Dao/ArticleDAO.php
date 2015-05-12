@@ -70,6 +70,7 @@ class ArticleDAO extends DAO{
             'title' => $article->getTitle(),
             'user_id' => $article->getAuthor()->getId(),
             'content' => $article->getContent(),
+            'added_time' => $article->getAddedTime()
         );
 
         if ($article->getId()) {
