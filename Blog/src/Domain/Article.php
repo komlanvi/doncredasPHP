@@ -33,7 +33,7 @@ class Article {
     private $content;
 
     /**
-     * @var datetime
+     * @var string
      */
     private $addedTime;
 
@@ -91,7 +91,7 @@ class Article {
     }
 
     /**
-     * @return DateTime
+     * @return String
      */
     public function getAddedTime()
     {
@@ -99,7 +99,7 @@ class Article {
     }
 
     /**
-     * @param DateTime $addedTime
+     * @param String $addedTime
      */
     public function setAddedTime($addedTime)
     {
