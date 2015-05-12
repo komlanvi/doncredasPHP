@@ -9,6 +9,8 @@
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
 use Symfony\Component\HttpFoundation\Request;
+use Aptoma\Twig\Extension\MarkdownExtension;
+use Aptoma\Twig\Extension\MarkdownEngine;
 
 // Register global error and exception handlers
 ErrorHandler::register();
@@ -64,7 +66,9 @@ if (isset($app['debug']) && $app['debug']) {
 // Register services.
 
 $app['twig'] = $app->share($app->extend('twig', function(Twig_Environment $twig) {
+    $engine = new MarkdownEngine\MichelfMarkdownEngine();
     $twig->addExtension(new Twig_Extensions_Extension_Text());
+    $twig->addExtension(new MarkdownExtension($engine));
     return $twig;
 }));
 
