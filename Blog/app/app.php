@@ -20,6 +20,7 @@ ExceptionHandler::register();
 $app->register(new Silex\Provider\DoctrineServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
+    'twig.options' => array("debug" => true),
 ));
 
 $app->register(new Silex\Provider\ValidatorServiceProvider());
@@ -61,6 +62,7 @@ if (isset($app['debug']) && $app['debug']) {
         'profiler.cache_dir' => __DIR__.'/../var/cache/profiler'
     ));
 }
+$app->register(new Silex\Provider\HttpFragmentServiceProvider());
 
 
 // Register services.
