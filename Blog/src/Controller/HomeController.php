@@ -24,7 +24,8 @@ class HomeController
      * @param Application $app The silex Application
      * @return mixed
      */
-    public function indexAction(Application $app) {
+    public function indexAction(Application $app)
+    {
         $articles = $app['Dao.article']->findAll();
         return $app['twig']->render('index.html.twig', array('articles' => $articles));
     }
@@ -35,7 +36,8 @@ class HomeController
      * @param Application $app
      * @return mixed
      */
-    public function viewArticleAction($id, Application $app) {
+    public function viewArticleAction($id, Application $app)
+    {
         $article = $app['Dao.article']->findArticle($id);
 
         return $app['twig']->render('article.html.twig', array(
@@ -50,7 +52,8 @@ class HomeController
      * @param Request $request
      * @return mixed
      */
-    public function loginAction(Application $app, Request $request){
+    public function loginAction(Application $app, Request $request)
+    {
         return $app['twig']->render('login.html.twig', array(
             'error'         => $app['security.last_error']($request),
             'last_username' => $app['session']->get('_security.last_username'),
@@ -63,7 +66,8 @@ class HomeController
      * @param Application $app
      * @return mixed
      */
-    public function aboutAction(Application $app) {
+    public function aboutAction(Application $app)
+    {
         return $app['twig']->render('about.html.twig');
     }
 
@@ -73,8 +77,13 @@ class HomeController
      * @param Application $app
      * @return mixed
      */
-    public function profileAction(Application $app) {
+    public function profileAction(Application $app)
+    {
         return $app['twig']->render('error.html.twig', array('message' => 'Under construction...', 'code' => '007'));
     }
 
+    public function portofoglioAction(Application $app)
+    {
+        return $app['twig']->render('portofoglio.html.twig');
+    }
 }
