@@ -11,6 +11,8 @@ $app->match('/article/{id}', 'Blog\Controller\HomeController::viewArticleAction'
 
 $app->get('/login', 'Blog\Controller\HomeController::loginAction')->bind('login');
 
+$app->get('/portofoglio', 'Blog\Controller\HomeController::portofoglioAction')->bind('portofoglio');
+
 
 // Admin home page
 $app->get('/admin', 'Blog\Controller\AdminController::indexAction')->bind('admin');
