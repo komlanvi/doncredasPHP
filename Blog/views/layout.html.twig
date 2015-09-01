@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %} Home - Doncredas {% endblock %}</title>
+    <title>{% block title %} Home {% endblock %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="{{ app.request.basepath }}/img/favicon.ico">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -61,6 +62,7 @@
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-left">
+                    <li><a href="#">PortoFoglio</a></li>
                     <li><a href="{{ path('about') }}">About me</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -78,7 +80,7 @@
     <div class="jumbotron" style="height: 110px; padding-bottom: 5px; padding-top: 40px; text-align: center; background-color: #ffffff;">
 
             <div class="container">
-                <h1 id="logo">Ciao, Sono Amegbleame Komlanvi</h1>
+                <h1 id="logo">Web development is my passion as well as my job</h1>
             </div>
 
     </div>
@@ -86,7 +88,6 @@
     <hr/>
 </header>
 <div class="container">
-    <span id="top"></span>
     {% for flashMessage in app.session.flashbag.get('success') %}
     <div class="alert alert-success">
         {{ flashMessage }}
@@ -96,9 +97,6 @@
     {% endblock %}
     <hr>
     <footer class="col-md-12" style="margin-bottom: 50px;" id="foot">
-        <div class="text-center">
-            {% markdown %}[**BACK TO TOP**](#top){% endmarkdown %}
-        </div>
         <span class="pull-left">Copyright © 2015 - doncredas</span> <span class="pull-right"><a href="https://github.com/doncredas/doncredasPHP" target="_blank">Code source</a></span>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

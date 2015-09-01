@@ -3,17 +3,17 @@
     <section class="col-md-8" id="main">
         {% block main %}
             {% for article in articles %}
-                <h1>{{ article.title }}</h1>
+                <h1>{{ article.title|markdown }}</h1>
                 <p>
                     <article>
-                        {{ article.content | truncate(450) }}
+                        {{ article.content|truncate(210)|markdown|raw }}
                         <a href="{{ app.request.basepath }}/article/{{ article.id }}">Read more</a>
                     </article>
                 </p>
                 <div>
                     <span class="label label-info">Posted on </span>
                     <time datetime="{{ article.addedTime }}" class="label label-primary">
-                        {{ article.addedTime|date('d-m-Y H:i:s') }}
+                        {{ article.addedTime|date('d-m-Y, H:i:s') }}
                     </time>
                     <div class="pull-right">
                         <span class="label label-default">By </span>
